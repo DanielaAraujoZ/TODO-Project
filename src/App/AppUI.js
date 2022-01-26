@@ -7,6 +7,9 @@ import { TodoItem } from "../Components/TodoItem.js";
 import { TodoContext } from "../TodoContext/index";
 import { ModalComponent } from "../Components/Modal";
 import { TodoForm } from "../Components/TodoForm.js";
+import { EmptyTodos } from '../Components/EmptyTodos.js'
+import { TodosError } from "../Components/TodosError.js";
+import { TodosLoading } from "../Components/TodosLoading.js";
 
 function AppUI() {
   const {
@@ -17,17 +20,19 @@ function AppUI() {
     deleteTodo,
     openModal,
     setOpenModal,
-  } = React.useContext(TodoContext); //Reemplaza al consumer
-
+  } = React.useContext(TodoContext);
+  
   return (
     <React.Fragment>
       <TodoCounter />
       <TodoSearch />
+
       <TodoList>
-        {loading && <p>Estamos cargando, espera un momento mas</p>}
-        {error && <p>Hubo un error, recarga la página</p>}
-        {!loading && !searchedTodos.length && <p>!CREA TU PRIMER TODO!</p>}
-        {searchedTodos.map((todo) => (
+        {error && <TodosError />}
+        {loading && <TodosLoading />}
+        {(!loading && !searchedTodos.length) && <EmptyTodos />}
+        
+        {searchedTodos.map(todo => (
           <TodoItem
             key={todo.text}
             text={todo.text}
@@ -37,13 +42,16 @@ function AppUI() {
           />
         ))}
       </TodoList>
+
       {!!openModal && (
         <ModalComponent>
-          <TodoForm/>
+          <TodoForm />
         </ModalComponent>
       )}
-      <CreateTodoButton 
-      setOpenModal={setOpenModal}/>
+
+      <CreateTodoButton
+        setOpenModal={setOpenModal}
+      />
     </React.Fragment>
   );
 }
