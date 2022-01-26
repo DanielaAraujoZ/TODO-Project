@@ -1,0 +1,11 @@
+.TodoCounter{
+    text-align: center;
+    font-size: 90px;
+    color: white;
+    text-shadow: 8px 4px 1px #0DFA9F;
+    margin-bottom: 5px;
+    margin-top: 70px;
+}   
+
+/*
+rgba(250, 238, 226, 0.5)*/
